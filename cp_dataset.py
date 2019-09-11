@@ -28,6 +28,12 @@ class CPDataset(data.Dataset):
         self.transform = transforms.Compose([  \
                 transforms.ToTensor(),   \
                 transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+        self.transform_1d = transforms.Compose([ \
+                transforms.ToTensor(), \
+                transforms.Normalize((0.5,), (0.5,))])
+        self.transform_1d_x = transforms.Compose([  \
+                transforms.ToTensor(),   \
+                transforms.Normalize((0.5), (0.5))])
         
         # load data list
         im_names = []
@@ -69,6 +75,7 @@ class CPDataset(data.Dataset):
         # load parsing image
         parse_name = im_name.replace('.jpg', '.png')
         im_parse = Image.open(osp.join(self.data_path, 'image-parse', parse_name))
+        #$$ im_parse.shape = [1,256,192]. png color image is with colormap.
         parse_array = np.array(im_parse)
         parse_shape = (parse_array > 0).astype(np.float32)
         parse_head = (parse_array == 1).astype(np.float32) + \
@@ -83,7 +90,8 @@ class CPDataset(data.Dataset):
         parse_shape = Image.fromarray((parse_shape*255).astype(np.uint8))
         parse_shape = parse_shape.resize((self.fine_width//16, self.fine_height//16), Image.BILINEAR)
         parse_shape = parse_shape.resize((self.fine_width, self.fine_height), Image.BILINEAR)
-        shape = self.transform(parse_shape) # [-1,1]
+        # – Body shape: a 1-channel feature map of a blurred binary mask that roughly covering different parts of human body.
+        shape = self.transform_1d(parse_shape) # [-1,1]
         phead = torch.from_numpy(parse_head) # [0,1]
         pcm = torch.from_numpy(parse_cloth) # [0,1]
 
@@ -112,11 +120,11 @@ class CPDataset(data.Dataset):
             if pointx > 1 and pointy > 1:
                 draw.rectangle((pointx-r, pointy-r, pointx+r, pointy+r), 'white', 'white')
                 pose_draw.rectangle((pointx-r, pointy-r, pointx+r, pointy+r), 'white', 'white')
-            one_map = self.transform(one_map)
+            one_map = self.transform_1d(one_map)
             pose_map[i] = one_map[0]
 
         # just for visualization
-        im_pose = self.transform(im_pose)
+        im_pose = self.transform_1d(im_pose)
         
         # cloth-agnostic representation
         agnostic = torch.cat([shape, im_h, pose_map], 0) 

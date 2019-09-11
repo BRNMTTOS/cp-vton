@@ -63,7 +63,7 @@ def test_gmm(opt, test_loader, model, board):
         agnostic = inputs['agnostic'].cuda()
         c = inputs['cloth'].cuda()
         cm = inputs['cloth_mask'].cuda()
-        im_c =  inputs['parse_cloth'].cuda()
+        im_c = inputs['parse_cloth'].cuda()
         im_g = inputs['grid_image'].cuda()
             
         grid, theta = model(agnostic, c)

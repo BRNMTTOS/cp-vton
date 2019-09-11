@@ -76,7 +76,7 @@ def train_gmm(opt, train_loader, model, board):
                    [c, warped_cloth, im_c], 
                    [warped_grid, (warped_cloth+im)*0.5, im]]
         
-        loss = criterionL1(warped_cloth, im_c)    
+        loss = criterionL1(warped_cloth, im_c)  #$$
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
