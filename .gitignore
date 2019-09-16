@@ -6,4 +6,5 @@ data/test/*
 log/*
 result/*/*
 result_*
+.DS_Store
 .idea/*

@@ -1,11 +1,9 @@
 # 复现 & 思考
 
-	源文件 Readme-raw.md
+源文件 Readme-raw.md
 	
-	目的：复现实现，感受效果；理解算法过程，分析算法瓶颈；借鉴思路，尝试改进方法；
-	
-	复现该实验，整个工程打包（包含数据、启动脚本、训练日志、模型、测试结果）：
-	
+目的：复现实现，感受效果；理解算法过程，分析算法瓶颈；借鉴思路，尝试改进方法；
+
 
 ## 1. 环境 & 配置
 
@@ -18,7 +16,6 @@ torchvision         0.3.0
 
 $ pip install tensorboardX
 ```
-
 
 **修改代码 cp_dataset.py**
 
@@ -73,7 +70,9 @@ step5-test-tom.sh
 
 显卡内存使用2647MiB(Memory-Usage), 限于生成图像尺寸256x192；训练时长，普通单卡机器1-2天可以完成。
 
-按原作者默认参数训练模型，训练模型存放于百度网盘（），供下载测试。
+按原作者默认参数训练模型，训练模型存放于[百度网盘](https://pan.baidu.com/s/1h6h9MYswltN4mcp5dfYycg)（链接: https://pan.baidu.com/s/1h6h9MYswltN4mcp5dfYycg 提取码: uwgg），供下载测试。tensorboard文件大约19G，如果需要有限时间内可联系索取。
+
+
 
 ```
 $ tree checkpoints/
@@ -89,6 +88,57 @@ checkpoints/
     ├── step_200000.pth
     └── tom_final.pth
 ```
+
+**TensorBoard**
+
+```
+tensorboard/
+├── gmm_train_new
+│   └── events.out.tfevents.1568110598.tplustf-imagealgo-50529-lisi-chief-0
+├── gmm_traintest_new
+│   └── events.out.tfevents.1568185067.tplustf-imagealgo-50529-lisi-chief-0
+├── tom_test_new
+│   └── events.out.tfevents.1568473618.tplustf-imagealgo-50529-lisi-chief-0
+└── tom_train_new
+    └── events.out.tfevents.1568188644.tplustf-imagealgo-50529-lisi-chief-0
+    
+$ tensorboard --logdir tensorboard/gmm_train_new/
+$ tensorboard --logdir tensorboard/gmm_traintest_new/
+$ tensorboard --logdir tensorboard/tom_train_new/
+$ tensorboard --logdir tensorboard/tom_test_new/
+```
+
+web: 
+
+	http://lisidemacbook-pro.local:6006/#scalars
+	http://lisidemacbook-pro.local:6006/#images
+
+scalars / images :
+
+	gmm_train_new
+
+![](pics/gmm-train-sc.png)
+![](pics/gmm-train-image.png)
+
+	gmm_traintest_new
+
+![](pics/gmm-traintest-images.png)
+
+	gmm_traintest__new
+
+![](pics/tom-train-sc-1.png)  ![](pics/tom-train-sc-2.png)
+![](pics/tom-train-images.png)
+
+	tom_test_new
+
+![](pics/tom-test.png)
+
+
+
+
+
+
+
 
 ## 3. Test
 
@@ -142,7 +192,10 @@ checkpoints/
  
 ## 5. 算法演进方向
 
-**Virtual Try-on**这条路还有很多技术点要解决。
+**Virtual Try-on**
+
+致敬诸位的创意，这条路还有很多技术点要解决。
+
 
 ```
 .
@@ -156,6 +209,6 @@ checkpoints/
 ├── 2019-Multi-pose Guided Virtual Try-on Network (MG-VTON)
 │   └── 1902.11026.Towards Multi-pose Guided Virtual Try-on Network.pdf
 ├── 2019-WUTON
-│   └── 1906.01347.End-to-End Learning of Geometric Deformations of Feature Maps for Virtual 
+│   └── 1906.01347.End-to-End Learning of Geometric Deformations of Feature Maps for Virtual Try-On.pdf 
 ```
 
