@@ -124,7 +124,7 @@ scalars / images :
 
 ![](pics/gmm-traintest-images.png)
 
-	gmm_traintest__new
+	tom_train__new
 
 ![](pics/tom-train-sc-1.png)  ![](pics/tom-train-sc-2.png)
 ![](pics/tom-train-images.png)
