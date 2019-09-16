@@ -5,4 +5,5 @@ data/train/*
 data/test/*
 log/*
 result/*/*
+result_*
 .idea/*

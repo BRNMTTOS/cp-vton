@@ -80,7 +80,9 @@ class FeatureL2Norm(torch.nn.Module):
         epsilon = 1e-6
         norm = torch.pow(torch.sum(torch.pow(feature,2),1)+epsilon,0.5).unsqueeze(1).expand_as(feature)
         return torch.div(feature,norm)
-    
+
+# https://github.com/ignacio-rocco/cnngeometric_pytorch/blob/master/model/cnn_geometric_model.py
+# I. Rocco, R. Arandjelović and J. Sivic. Convolutional neural network architecture for geometric matching. CVPR 2017
 class FeatureCorrelation(nn.Module):
     def __init__(self):
         super(FeatureCorrelation, self).__init__()
@@ -92,6 +94,13 @@ class FeatureCorrelation(nn.Module):
         feature_B = feature_B.view(b,c,h*w).transpose(1,2)
         # perform matrix mult.
         feature_mul = torch.bmm(feature_B,feature_A)
+        '''
+        torch.bmm(input, mat2, out=None) → Tensor
+        Performs a batch matrix-matrix product of matrices stored in input and mat2.
+        input and mat2 must be 3-D tensors each containing the same number of matrices.
+        If input is a (b \times n \times m)(b×n×m) tensor, mat2 is a (b \times m \times p)(b×m×p) tensor,
+        out will be a (b \times n \times p)(b×n×p) tensor.
+​	    '''
         correlation_tensor = feature_mul.view(b,h,w,h*w).transpose(2,3).transpose(1,2)
         return correlation_tensor
     

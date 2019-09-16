@@ -77,7 +77,7 @@ class CPDataset(data.Dataset):
         im_parse = Image.open(osp.join(self.data_path, 'image-parse', parse_name))
         #$$ im_parse.shape = [1,256,192]. png color image is with colormap.
         parse_array = np.array(im_parse)
-        parse_shape = (parse_array > 0).astype(np.float32)
+        parse_shape = (parse_array > 0).astype(np.float32) #$$ 0 or 1
         parse_head = (parse_array == 1).astype(np.float32) + \
                 (parse_array == 2).astype(np.float32) + \
                 (parse_array == 4).astype(np.float32) + \
@@ -87,8 +87,8 @@ class CPDataset(data.Dataset):
                 (parse_array == 7).astype(np.float32)
        
         # shape downsample
-        parse_shape = Image.fromarray((parse_shape*255).astype(np.uint8))
-        parse_shape = parse_shape.resize((self.fine_width//16, self.fine_height//16), Image.BILINEAR)
+        parse_shape = Image.fromarray((parse_shape*255).astype(np.uint8)) #$$ 0 or 255
+        parse_shape = parse_shape.resize((self.fine_width//16, self.fine_height//16), Image.BILINEAR) #$$ why
         parse_shape = parse_shape.resize((self.fine_width, self.fine_height), Image.BILINEAR)
         # – Body shape: a 1-channel feature map of a blurred binary mask that roughly covering different parts of human body.
         shape = self.transform_1d(parse_shape) # [-1,1]
@@ -97,7 +97,7 @@ class CPDataset(data.Dataset):
 
         # upper cloth
         im_c = im * pcm + (1 - pcm) # [-1,1], fill 1 for other parts
-        im_h = im * phead - (1 - phead) # [-1,1], fill 0 for other parts
+        im_h = im * phead - (1 - phead) # [-1,1], fill 0 for other parts #$$ not good.
 
         # load pose points
         pose_name = im_name.replace('.jpg', '_keypoints.json')
@@ -127,7 +127,7 @@ class CPDataset(data.Dataset):
         im_pose = self.transform_1d(im_pose)
         
         # cloth-agnostic representation
-        agnostic = torch.cat([shape, im_h, pose_map], 0) 
+        agnostic = torch.cat([shape, im_h, pose_map], 0)  #$$ 1 + 1? + 18 =
 
         if self.stage == 'GMM':
             im_g = Image.open('grid.png')
