@@ -72,6 +72,11 @@ step5-test-tom.sh
 
 按原作者默认参数训练模型，训练模型存放于[百度网盘](https://pan.baidu.com/s/1h6h9MYswltN4mcp5dfYycg)（链接: https://pan.baidu.com/s/1h6h9MYswltN4mcp5dfYycg 提取码: uwgg），供下载测试。tensorboard文件大约19G，如果需要有限时间内可联系索取。
 
+```
+嗨，按原作者默认参数，我复现了一把实验。
+训练模型存放于百度网盘（链接: https://pan.baidu.com/s/1h6h9MYswltN4mcp5dfYycg 提取码: uwgg），供下载测试。
+部分分析和拙见写在 Github: https://github.com/cinastanbean/cp-vton ，欢迎同行拍砖讨论。
+```
 
 
 ```
@@ -94,13 +99,13 @@ checkpoints/
 ```
 tensorboard/
 ├── gmm_train_new
-│   └── events.out.tfevents.1568110598.tplustf-imagealgo-50529-lisi-chief-0
+│   └── events.out.tfevents.1568110598.tplustf-imagealgo-50529-ever-chief-0
 ├── gmm_traintest_new
-│   └── events.out.tfevents.1568185067.tplustf-imagealgo-50529-lisi-chief-0
+│   └── events.out.tfevents.1568185067.tplustf-imagealgo-50529-ever-chief-0
 ├── tom_test_new
-│   └── events.out.tfevents.1568473618.tplustf-imagealgo-50529-lisi-chief-0
+│   └── events.out.tfevents.1568473618.tplustf-imagealgo-50529-ever-chief-0
 └── tom_train_new
-    └── events.out.tfevents.1568188644.tplustf-imagealgo-50529-lisi-chief-0
+    └── events.out.tfevents.1568188644.tplustf-imagealgo-50529-ever-chief-0
     
 $ tensorboard --logdir tensorboard/gmm_train_new/
 $ tensorboard --logdir tensorboard/gmm_traintest_new/
@@ -110,8 +115,8 @@ $ tensorboard --logdir tensorboard/tom_test_new/
 
 web: 
 
-	http://lisidemacbook-pro.local:6006/#scalars
-	http://lisidemacbook-pro.local:6006/#images
+	http://everdemacbook-pro.local:6006/#scalars
+	http://everdemacbook-pro.local:6006/#images
 
 scalars / images :
 
