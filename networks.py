@@ -424,9 +424,9 @@ class GMM(nn.Module):
     def forward(self, inputA, inputB):
         featureA = self.extractionA(inputA)
         featureB = self.extractionB(inputB)
-        featureA = self.l2norm(featureA)
+        featureA = self.l2norm(featureA) #$$ remove ambiguous matches
         featureB = self.l2norm(featureB)
-        correlation = self.correlation(featureA, featureB)
+        correlation = self.correlation(featureA, featureB) #$$ why using correlation layer?
 
         theta = self.regression(correlation)
         grid = self.gridGen(theta)
