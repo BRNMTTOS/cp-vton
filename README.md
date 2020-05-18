@@ -70,7 +70,7 @@ step5-test-tom.sh
 
 显卡内存使用2647MiB(Memory-Usage), 限于生成图像尺寸256x192；训练时长，普通单卡机器1-2天可以完成。
 
-按原作者默认参数训练模型，训练模型存放于[百度网盘](https://pan.baidu.com/s/1h6h9MYswltN4mcp5dfYycg)（链接: https://pan.baidu.com/s/1h6h9MYswltN4mcp5dfYycg 提取码: uwgg），供下载测试。tensorboard文件大约19G，如果需要有限时间内可联系索取。
+按原作者默认参数训练模型，训练模型存放于[百度网盘](https://pan.baidu.com/s/1h6h9MYswltN4mcp5dfYycg)（链接: https://pan.baidu.com/s/1gJqjGvXQgdoGkCF_YpNAUQ 提取码: b3fk），供下载测试。tensorboard文件大约19G，如果需要有限时间内可联系索取。
 
 ```
 嗨，按原作者默认参数，我复现了一把实验。
