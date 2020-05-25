@@ -1,13 +1,13 @@
-# 复现 & 思考
+# Reappear & Think
 
-源文件 Readme-raw.md
-	
-目的：复现实现，感受效果；理解算法过程，分析算法瓶颈；借鉴思路，尝试改进方法；
+Source file Readme-raw.md
+
+Purpose: Reproduce the realization, feel the effect; understand the algorithm process, analyze the algorithm bottleneck; learn from the ideas, try to improve the method;
 
 
-## 1. 环境 & 配置
+## 1. Environment & Configuration
 
-**环境**
+**surroundings**
 
 ```
 $ pip list | grep torch
@@ -17,9 +17,9 @@ torchvision         0.3.0
 $ pip install tensorboardX
 ```
 
-**修改代码 cp_dataset.py**
+**Modify the code cp_dataset.py**
 
-源代码中对单通道图做transform变换，需要修改。
+Transform the single-channel graph in the source code, which needs to be modified.
 
 ```
 Traceback (most recent call last):
@@ -57,7 +57,7 @@ RuntimeError: DataLoader worker (pid 2841) is killed by signal: Bus error.
 ## 2. Train
 
 
-**STEPs**
+**STEPS**
 
 ```
 step1-train-gmm.sh
@@ -67,15 +67,14 @@ $ mv result/gmm_final.pth/train/* data/train/
 step4-train-tom.sh
 step5-test-tom.sh
 ```
+The graphics card memory uses 2647MiB (Memory-Usage), which is limited to generating an image size of 256x192; training time, ordinary single-card machine can be completed in 1-2 days.
 
-显卡内存使用2647MiB(Memory-Usage), 限于生成图像尺寸256x192；训练时长，普通单卡机器1-2天可以完成。
-
-按原作者默认参数训练模型，训练模型存放于[百度网盘](https://pan.baidu.com/s/1h6h9MYswltN4mcp5dfYycg)（链接: https://pan.baidu.com/s/1gJqjGvXQgdoGkCF_YpNAUQ 提取码: b3fk），供下载测试。tensorboard文件大约19G，如果需要有限时间内可联系索取。
+Train the model according to the original author's default parameters. The training model is stored in Baidu network disk (link: https://pan.baidu.com/s/1gJqjGvXQgdoGkCF_YpNAUQ extraction code: b3fk) for download and test. The tensorboard file is about 19G, if you need a limited time, you can contact to obtain it.
 
 ```
-嗨，按原作者默认参数，我复现了一把实验。
-训练模型存放于百度网盘（链接: https://pan.baidu.com/s/1h6h9MYswltN4mcp5dfYycg 提取码: uwgg），供下载测试。
-部分分析和拙见写在 Github: https://github.com/cinastanbean/cp-vton ，欢迎同行拍砖讨论。
+Hi, according to the original author's default parameters, I reproduced an experiment.
+The training model is stored in Baidu network disk (link: https://pan.baidu.com/s/1h6h9MYswltN4mcp5dfYycg extraction code: uwgg) for download and testing.
+Part of the analysis and humble opinion is written on Github: https://github.com/cinastanbean/cp-vton.
 ```
 
 
@@ -147,7 +146,7 @@ scalars / images :
 
 ## 3. Test
 
-执行前**STEPs**中所列步骤，后执行```python smart_show_test_result.py```， 可以在```result_simple```文件夹下查看生成结果，示例图片如下，从左到右每列图片意思是：
+Perform the steps listed in the STEPs before and after the execution ``python smart_show_test_result.py```，You can view the generated results in the folder```result_simple```，The sample pictures are as follows. From left to right, each column of pictures means:
 
 [cloth, cloth-mask, model-image, model-image-parse, cloth-warp, cloth-warp-mask, try-on-result]
 
@@ -162,44 +161,44 @@ scalars / images :
 ![](pics/src_019531_dst_015077.png)
 
 
-## 4. Virtual Try-On 技术路线的瓶颈
+## 4. Bottleneck of Virtual Try-On technology route
 
-虚拟模特图像生成，技术上大致有三条路实现。
+Virtual model image generation is technically achieved in three ways.
 
-“Virtual Try-On”（VTON）是其中一种方式。
-
-
-**VTON技术有如下考虑：**
-
-1. 规避模特生成问题，模特生成本身比较难以做到，难以做到对模特面孔头发、身材真实性等方面的保真度，VTON技术路线规避该问题；
-2. 默认模特已经穿着了和待合成服饰尺寸形状大体一致的服饰，通过对服饰做Warping进而“贴图”，实现Try-On的效果。
+"Virtual Try-On" (VTON) is one of them.
 
 
-**技术产品化VTON思路还有些问题：**
+**VTON technology has the following considerations:**
 
- 1. 对指定模特，给他换上另外一套衣服，需要妥善处理版权问题；
- 2. 服装和人的搭配问题，如何保持视觉协调；
- 3. 服装穿着在人身上产生的自然形变，因为对服饰做Warping没有根本解决对服饰的理解问题；（如下图条纹状服饰）
- 4. 模特摆拍姿势多样，肢体和服装之间的遮挡问题;（如下图手臂遮挡服饰）
- 5. 当前数据和实验，数据限于上衣短袖类目，图像尺寸256x192, 还属于Toy级别实验；
+1. To avoid the problem of model generation, the model generation itself is more difficult to achieve, and it is difficult to achieve fidelity to the model's face, hair, and body authenticity. The VTON technical route circumvents this problem;
+2. The default model is already wearing clothing that is roughly the same size and shape as the clothing to be synthesized. Warping the clothing and then "sticking" the texture to achieve the Try-On effect.
 
-**条纹状服饰**
+
+**There are still some problems with the technical productization of VTON:**
+
+ 1. For the designated model, give him another set of clothes, the copyright issue needs to be properly handled;
+ 2. How to maintain visual coordination in the matching of clothing and people;
+ 3. The natural deformation of clothing when it is worn on people, because doing Warping on clothing does not fundamentally solve the problem of understanding clothing; (striped clothing as shown below)
+ 4. The model poses in a variety of poses, and the occlusion problem between the limbs and the clothing; (the arm shields the clothing as shown below)
+ 5. Current data and experiments, the data is limited to the short-sleeved shirt category, the image size is 256x192, and it is also a Toy-level experiment;
+
+**Striped clothing**
 
 ![](pics/src_012377_dst_017227_p1.png)
 ![](pics/src_019001_dst_010473_p1.png)
 ![](pics/src_013309_dst_002031_p1.png)
 
-**手臂遮挡服饰**
+**Arm covering clothing**
  
 ![](pics/src_012830_dst_008479_p2.png)
 ![](pics/src_012975_dst_007423_p2.png)
  
  
-## 5. 算法演进方向
+## 5. Algorithm evolution direction
 
 **Virtual Try-on**
 
-致敬诸位的创意，这条路还有很多技术点要解决。
+To pay tribute to your creativity, this road still has many technical points to solve.
 
 
 ```
